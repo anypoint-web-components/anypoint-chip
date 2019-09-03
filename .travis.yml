@@ -2,13 +2,15 @@ language: node_js
 node_js: stable
 sudo: required
 addons:
-  # firefox: latest
   apt:
     sources:
-      - google-chrome
+    - google-chrome
     packages:
-      - google-chrome-stable
+    - google-chrome-stable
 script:
-  - npm run test
-  - >-
-    if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test:sl; fi
+- npm run test
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test:sl; fi
+env:
+  global:
+  - secure: E4JUFCFbHPm5hfSpwEXFM7yrsWjPwMWvlqxlu93XoiUpwAdIctLt+q52OQG8TeGFLNZOLnxioZQ+nFM+GI8TkIZ73mCGhs7MjoltEBwZp71wGEHMr07lgDFOhtc1sod5SGzoupdLNg7b3rT/lluJ5kB/X1k58HewY48IVKns6OFwvLpKJW3cAHCy5BSpo2rNMa97P1QeCst8rN/nK9nOWjCHA40LXcTvkrOv1JC/dTfwrWzl9gG7FlupPgtC/Jr4zfxlmV39L0408iV9fVmfgPWvMtnhtzXS6NTLxc7Odp6n76F1kducajB/nWy+iVdvFpr+Qs1+TJNQKrINGRdoaYk/nddN1JuSOfmY0NU1/Bm39Wh6nbLM2h620lU9fMmPaLNVYuNTVcSMKtS91tcS+aoWVJmqBH0PamU+SKKHKeuQkKikmPQQnwwDEG/ITda5i3aZjpsrGcThSccuwPqigMSkm4dLlYtyT3wwN7G9GNEfpbfG7tgKxP+yROs9wzEdJNf/6Ia/smQzXKEOHS6gRZQ8EZnGzcSROTT72x2AcZznyOhtsRo2SdMVvTEuYvM9q9uDmEEfb53BnEPdvDeH98eCXn4kKEFkk77gSzhVei5C+jgJkJyM/9qvM/RJgOsOhU6Jqh7VTyqyeNRAnUCCVnWwyyUbW/I9DO+2HcnMD6o=
+  - secure: mZYSIKf40yifsGdUR8CX6CEfHuqD+xz+9BpKWDf5a1j/bWS5ydF3wHdYOaucLNwQZ4jN6hwaFF5dnsAjJMdMkUqz7nvxd5QFgfOFz7BLaKdxcxwTL2WjIctPd1A7xDEuX2/Bj7bctjLlCJEQFbmW4OynPRDxX9+VBXQvHhB8IDzc72gHLHaQz18hHFkj8h8b6sLIm1ioU4r2Y9rBo4wuNwQK0thFvedGz0tK5F4fSgJJ04EpOXr0fhkLhOKL7LdtzyVahAA/fBjEDgynuplDsKOWZ3PQwF5xx4TfN054unQTalFqFAe2NWQ+2pcQYVhNgWyR/dQaqrYxRJSzMAvIP48+BruaDpvN1r+ekZZI6fpxhiOl4llNwUfQy/vkCoPV+7iiXPM7EAuKvkZYf7K7dUZQC0MIiZkV0BZttQJgpKHBevtMfjzgjisYAJMGmn2tgLkD1fJNh5TJuUd4wuYIA/jhKzIfl2iBBp7xquIHCm5ZmY9gaTu9lZtH2q7ie2LMpMgxOjf/veKLmEkMfA6tBttTqCJp54BqtCkvXD+TrcwAMARUVV1OYobIQa6qYmsdMLcNKjzj4FSCDVyOp6fBIS1srUkFu4oaZ09kAJ3qHR/4BJENoc/wZ0oPe06bCRmJOoeR2wBV/gR0IQUTqdEF0GXx0fdfhh8zFxGHf/bV0zo=
