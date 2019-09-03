@@ -1,10 +1,10 @@
-[![Published on NPM](https://img.shields.io/npm/v/@advanced-rest-client/paper-chip.svg)](https://www.npmjs.com/package/@advanced-rest-client/paper-chip)
+[![Published on NPM](https://img.shields.io/npm/v/@anypoint-web-components/anypoint-chip.svg)](https://www.npmjs.com/package/@anypoint-web-components/anypoint-chip)
 
-[![Build Status](https://travis-ci.org/advanced-rest-client/paper-chip.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/paper-chip)
+[![Build Status](https://travis-ci.org/anypoint-web-components/anypoint-chip.svg?branch=stage)](https://travis-ci.org/anypoint-web-components/anypoint-chip)
 
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/paper-chip)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/anypoint-web-components/anypoint-chip)
 
-# paper-chip
+# anypoint-chip
 
 A compact material design element that represent and input, attribute, or action.
 
@@ -21,35 +21,35 @@ A compact material design element that represent and input, attribute, or action
 </style>
 <h2>Basics</h2>
 <section>
-  <paper-chip>Simple chip</paper-chip>
+  <anypoint-chip>Simple chip</anypoint-chip>
 
-  <paper-chip>
+  <anypoint-chip>
     <span class="avatar" slot="icon">C</span>
     <span>Chip with icon</span>
-  </paper-chip>
+  </anypoint-chip>
 
-  <paper-chip removable>
+  <anypoint-chip removable>
     <span class="avatar" slot="icon">R</span>
     Chip that can be removed
-  </paper-chip>
+  </anypoint-chip>
 
-  <paper-chip removable disabled>
+  <anypoint-chip removable disabled>
     <span class="avatar" slot="icon">D</span>
     Disabled chip
-  </paper-chip>
+  </anypoint-chip>
 </section>
 
 <h2>Input chips</h2>
 <section>
-  <paper-chip removable>
+  <anypoint-chip removable>
     <iron-icon icon="communication:location-on" slot="icon"></iron-icon>
     Portland
-  </paper-chip>
+  </anypoint-chip>
 
-  <paper-chip removable>
+  <anypoint-chip removable>
     <iron-icon icon="maps:directions-bike" slot="icon"></iron-icon>
     Biking
-  </paper-chip>
+  </anypoint-chip>
 </section>
 ```
 
@@ -61,7 +61,7 @@ This components is a part of [API components ecosystem](https://elements.advance
 
 ### Installation
 ```
-npm install --save @advanced-rest-client/paper-chip
+npm install --save @anypoint-web-components/anypoint-chip
 ```
 
 ### In an html file
@@ -70,73 +70,72 @@ npm install --save @advanced-rest-client/paper-chip
 <html>
   <head>
     <script type="module">
-      import './node_modules/@advanced-rest-client/paper-chip/paper-chip.js';
+      import './node_modules/@anypoint-web-components/anypoint-chip/anypoint-chip.js';
     </script>
   </head>
   <body>
-    <paper-chip></paper-chip>
+    <anypoint-chip></anypoint-chip>
   </body>
 </html>
 ```
 
-### In a Polymer 3 element
+### In a LitElement
 
 ```js
-import {PolymerElement, html} from './node_modules/@polymer/polymer';
-import './node_modules/@advanced-rest-client/paper-chip/paper-chip.js';
+import { LitElement, html } from 'lit-element';
+import '@anypoint-web-components/anypoint-chip/anypoint-chip.js';
 
 class SampleElement extends PolymerElement {
-  static get template() {
+  render() {
     return html`
-    <paper-chip></paper-chip>
+    <anypoint-chip></anypoint-chip>
     `;
   }
 }
 customElements.define('sample-element', SampleElement);
 ```
 
-### Installation
+## Development
 
 ```sh
-git clone https://github.com/advanced-rest-client/paper-chip
-cd api-url-editor
+git clone https://github.com/anypoint-web-components/anypoint-chip
+cd anypoint-chippolymer test --npm
 npm install
-npm install -g polymer-cli
 ```
 
 ### Running the demo locally
 
 ```sh
-polymer serve --npm
-open http://127.0.0.1:<port>/demo/
+npm start
 ```
 
 ### Running the tests
+
 ```sh
-polymer test --npm
+npm test
 ```
 
 ## Styling
 
-`<paper-chip>` provides the following custom properties for styling:
+`<anypoint-chip>` provides the following custom properties for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--paper-chip-background-color` | Chip background color | `rgba(35, 47, 52, 0.12)`
-`--paper-chip-focused-background-color` | Background color when focused | `#D6D6D6`
-`--paper-chip-active-background-color` | Background color when toggle is active | `#cdcdcd`
-`--paper-chip-icon-color` | Color of the icon | `#666666`
-`--paper-chip-label-color` | Color of the label | `#232F34`
-`--paper-chip-label-focused-color` | Color of the when focused | ``
-`--paper-chip-label-active-color` | Color of the when active | ``
-`--paper-chip-icon-close-color` | Color of the close icon | `#dfdfdf`
-`--paper-chip-icon-close-background-color` | Background color of the close icon | `#666666`
+`--anypoint-chip-background-color` | Chip background color | `rgba(35, 47, 52, 0.12)`
+`--anypoint-chip-focused-background-color` | Background color when focused | `#D6D6D6`
+`--anypoint-chip-active-background-color` | Background color when toggle is active | `#cdcdcd`
+`--anypoint-chip-icon-color` | Color of the icon | `#666666`
+`--anypoint-chip-label-color` | Color of the label | `#232F34`
+`--anypoint-chip-label-focused-color` | Color of the when focused | ``
+`--anypoint-chip-label-active-color` | Color of the when active | ``
+`--anypoint-chip-icon-close-color` | Color of the close icon | `#dfdfdf`
+`--anypoint-chip-icon-close-background-color` | Background color of the close icon | `#666666`
 
-`<paper-chip>` provides the following [parts](https://www.w3.org/TR/css-shadow-parts-1/):
+`<anypoint-chip>` provides the following [parts](https://www.w3.org/TR/css-shadow-parts-1/):
 
 Part name | Description
 ----------------|-------------
-`paper-chip-container` | Styles applied to the chip container
-`paper-chip-icon` | Styles applied to the icon container
-`paper-chip-label` | Styles applied to the label container
-`paper-chip-remove` | Styles applied to the delete icon
+`anypoint-chip-container` | Styles applied to the chip container
+`anypoint-chip-icon` | Styles applied to the icon container
+`anypoint-chip-label` | Styles applied to the label container
+`anypoint-chip-remove` | Styles applied to the delete icon
