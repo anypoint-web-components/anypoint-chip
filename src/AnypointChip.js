@@ -32,6 +32,7 @@ import '@polymer/iron-icon/iron-icon.js';
  * Custom property | Description | Default
  * ----------------|-------------|----------
  * `--anypoint-chip-background-color` | Chip background color | `rgba(35, 47, 52, 0.12)`
+ * `--anypoint-chip-border` | Chip border | `none`
  * `--anypoint-chip-focused-background-color` | Background color when focused | `#D6D6D6`
  * `--anypoint-chip-active-background-color` | Background color when toggle is active | `#cdcdcd`
  * `--anypoint-chip-icon-color` | Color of the icon | `#666666`
@@ -67,6 +68,7 @@ export class AnypointChip extends LitElement {
     .container {
       border-radius: 16px;
       background-color: var(--anypoint-chip-background-color, rgba(35, 47, 52, 0.12));
+      border: var(--anypoint-chip-border, none);
       height: inherit;
       min-height: 32px;
       -moz-user-select: none;
