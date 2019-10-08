@@ -2,6 +2,7 @@ import { fixture, assert, nextFrame, aTimeout } from '@open-wc/testing';
 import '../anypoint-chip.js';
 import * as sinon from 'sinon/pkg/sinon-esm.js';
 import * as MockInteractions from '@polymer/iron-test-helpers/mock-interactions.js';
+import { clearAll, clear } from '@advanced-rest-client/arc-icons/ArcIcons.js';
 
 describe('<anypoint-chip>', function() {
   async function basicFixture() {
@@ -453,6 +454,27 @@ describe('<anypoint-chip>', function() {
       element.toggles = true;
       element.__activeChanged(false);
       assert.equal(element.getAttribute('aria-pressed'), 'false');
+    });
+  });
+
+  describe('close icon', () => {
+    let element;
+    beforeEach(async () => {
+      element = await basicFixture();
+    });
+
+    it('has default close icon', () => {
+      assert.equal(element.removeIcon, clear);
+    });
+
+    it('sets custom icon', () => {
+      element.removeIcon = clearAll;
+      assert.equal(element.removeIcon, clearAll);
+    });
+
+    it('ignores incompatible values', () => {
+      element.removeIcon = 'test';
+      assert.equal(element.removeIcon, clear);
     });
   });
 

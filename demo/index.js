@@ -2,6 +2,7 @@ import { html } from 'lit-html';
 import { ArcDemoPage } from '@advanced-rest-client/arc-demo-helper/ArcDemoPage.js';
 import '@anypoint-web-components/anypoint-checkbox/anypoint-checkbox.js';
 import '@advanced-rest-client/arc-demo-helper/arc-interactive-demo.js';
+import { clearAll } from '@advanced-rest-client/arc-icons/ArcIcons.js';
 import '@polymer/iron-icon/iron-icon.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/iron-icons/communication-icons.js';
@@ -298,6 +299,18 @@ class DemoPage extends ArcDemoPage {
               <span>Also styled with parts</span>
             </anypoint-chip>
           </div>
+        </div>
+
+        <h3>Custom "close" icon</h3>
+        <p>
+          The close icon can be replaced by other icon by setting
+          <code>removeIcon</code> property. The value must be a <code>SVGTemplateResult</code>
+          from <code>lit-html</code> library.
+        </p>
+        <div class="wrap-horizontal actions">
+          <anypoint-chip .removeIcon="${clearAll}" removable>
+            Custom icon
+          </anypoint-chip>
         </div>
       </section>
     `;

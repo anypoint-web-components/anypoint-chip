@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
-import '@polymer/iron-icon/iron-icon.js';
+import { clear } from '@advanced-rest-client/arc-icons/ArcIcons.js';
 /**
  * `anypoint-chip`
  *
@@ -14,7 +14,7 @@ import '@polymer/iron-icon/iron-icon.js';
  *
  * ```html
  * <anypoint-chip removable>
- *  <iron-icon icon="maps:directions-bike" slot="icon"></iron-icon>
+ *  <img src="..." slot="icon"/>
  *  Biking
  * </anypoint-chip>
  * ```
@@ -162,6 +162,8 @@ export class AnypointChip extends LitElement {
       border-radius: 50%;
       margin-right: 6px;
       cursor: pointer;
+      fill: currentColor;
+      display: inline-block;
     }`;
   }
 
@@ -173,13 +175,6 @@ export class AnypointChip extends LitElement {
        * `chip-removed` custom event to inform parent element about the action.
        */
       removable: { type: Boolean },
-      /**
-       * A name of the icon to render when `removable` property is set.
-       * By default it referes to Polymer's default icons library, to the
-       * `clear` icon. You must include this library into your document.
-       * You can also use whatever other icons library.
-       */
-      removeIcon: { type: String },
 
       _hasIconNode: { type: Boolean },
       /**
@@ -243,29 +238,30 @@ export class AnypointChip extends LitElement {
       this.removeAttribute('focused');
     }
   }
-
-  _iconSlotTemplate() {
-    return html`<span part="anypoint-chip-icon" class="icon"><slot name="icon"></slot></span>`;
+  /**
+   * @return {SVGTemplateResult} An icon to render when `removable` is set.
+   * @default ARC's `clear` icon.
+   */
+  get removeIcon() {
+    return this._removeIcon || clear;
   }
-
-  _removeTemplate() {
-    if (!this.removable) {
-      return '';
+  /**
+   * @param {SVGTemplateResult} value An icon to be used to render "remove" icon.
+   * It must be an instance of `SVGTemplateResult` that can be created from `lit-html`
+   * library.
+   *
+   * ```javascript
+   * import { svg } from 'lit-html';
+   * const icon = svg`...`; // content of the icon.
+   * ```
+   */
+  set removeIcon(value) {
+    if (value && (!value.constructor || value.constructor.name !== 'SVGTemplateResult')) {
+      return;
     }
-    return html`<iron-icon
-      part="anypoint-chip-remove"
-      class="close"
-      icon="${this.removeIcon}"
-      @click="${this._removeHandler}"></iron-icon>`;
-  }
-
-  render() {
-    const containerClass = this._computeContainerClass(this._hasIconNode, this.removable);
-    return html`<div part="anypoint-chip-container" class="container ${containerClass}">
-      ${this._iconSlotTemplate()}
-      <span part="anypoint-chip-label" class="label"><slot></slot></span>
-      ${this._removeTemplate()}
-    </div>`;
+    const old = this._removeIcon;
+    this._removeIcon = value;
+    this.requestUpdate('removeIcon', old);
   }
   /**
    * @return {HTMLElement} Reference to the icon slot element.
@@ -276,7 +272,6 @@ export class AnypointChip extends LitElement {
 
   constructor() {
     super();
-    this.removeIcon = 'clear';
     this._keyDownHandler = this._keyDownHandler.bind(this);
     this._focusBlurHandler = this._focusBlurHandler.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
@@ -481,6 +476,31 @@ export class AnypointChip extends LitElement {
         this.removeAttribute('aria-pressed');
       }
     }
+  }
+
+  _iconSlotTemplate() {
+    return html`<span part="anypoint-chip-icon" class="icon"><slot name="icon"></slot></span>`;
+  }
+
+  _removeTemplate() {
+    if (!this.removable) {
+      return '';
+    }
+    const { removeIcon } = this;
+    return html`<span
+      part="anypoint-chip-remove"
+      class="close"
+      @click="${this._removeHandler}"
+    >${removeIcon}</span>`;
+  }
+
+  render() {
+    const containerClass = this._computeContainerClass(this._hasIconNode, this.removable);
+    return html`<div part="anypoint-chip-container" class="container ${containerClass}">
+      ${this._iconSlotTemplate()}
+      <span part="anypoint-chip-label" class="label"><slot></slot></span>
+      ${this._removeTemplate()}
+    </div>`;
   }
   /**
    * Dispatched when the user clicked on "remove" button or when `remove()`
