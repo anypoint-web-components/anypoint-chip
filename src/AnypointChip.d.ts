@@ -32,7 +32,7 @@ declare namespace UiElements {
    *
    * ```html
    * <anypoint-chip removable>
-   *  <iron-icon icon="maps:directions-bike" slot="icon"></iron-icon>
+   *  <img src="..." slot="icon"/>
    *  Biking
    * </anypoint-chip>
    * ```
@@ -50,6 +50,7 @@ declare namespace UiElements {
    * Custom property | Description | Default
    * ----------------|-------------|----------
    * `--anypoint-chip-background-color` | Chip background color | `rgba(35, 47, 52, 0.12)`
+   * `--anypoint-chip-border` | Chip border | `none`
    * `--anypoint-chip-focused-background-color` | Background color when focused | `#D6D6D6`
    * `--anypoint-chip-active-background-color` | Background color when toggle is active | `#cdcdcd`
    * `--anypoint-chip-icon-color` | Color of the icon | `#666666`
@@ -78,6 +79,7 @@ declare namespace UiElements {
     _active: any;
     readonly focused: Boolean|null;
     _focused: any;
+    removeIcon: SVGTemplateResult|null;
     readonly _iconSlot: HTMLElement|null;
 
     /**
@@ -86,14 +88,6 @@ declare namespace UiElements {
      * `chip-removed` custom event to inform parent element about the action.
      */
     removable: boolean|null|undefined;
-
-    /**
-     * A name of the icon to render when `removable` property is set.
-     * By default it referes to Polymer's default icons library, to the
-     * `clear` icon. You must include this library into your document.
-     * You can also use whatever other icons library.
-     */
-    removeIcon: string|null|undefined;
     _hasIconNode: boolean|null|undefined;
 
     /**
@@ -111,8 +105,6 @@ declare namespace UiElements {
     disconnectedCallback(): void;
     firstUpdated(changedProperties: any): void;
     render(): any;
-    _iconSlotTemplate(): any;
-    _removeTemplate(): any;
 
     /**
      * Adds the `slotchange` event listener to the icon slot.
@@ -190,5 +182,7 @@ declare namespace UiElements {
      * the action.
      */
     _asyncClick(): void;
+    _iconSlotTemplate(): any;
+    _removeTemplate(): any;
   }
 }
