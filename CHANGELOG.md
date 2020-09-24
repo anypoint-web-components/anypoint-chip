@@ -63,3 +63,37 @@
 
 
 
+<a name="0.2.1"></a>
+## 0.2.1 (2020-09-24)
+
+### Build
+
+* bumping minor version [612e3a3](https://github.com/anypoint-web-components/anypoint-chip/commit/612e3a3fa6333976a7e4f0a20069ccdd95767caa) by Pawel
+* bumping version [dfa742d](https://github.com/anypoint-web-components/anypoint-chip/commit/dfa742d1a3b2e909dbb9551bcf585500649aa4c1) by Pawel
+* publishing first stable version [fdc8a46](https://github.com/anypoint-web-components/anypoint-chip/commit/fdc8a463d99b1163e91738143c3f201b922b0dd5) by Pawel
+
+
+### Update
+
+* upgrading to latest ARC standard [34d8fd8](https://github.com/anypoint-web-components/anypoint-chip/commit/34d8fd883d56136e2d7f3162b142d231d17bd522) by Pawel
+* updating types [ac053a3](https://github.com/anypoint-web-components/anypoint-chip/commit/ac053a336e167f09ae7702bffce6c6dc946d2406) by Pawel
+* upgrading dependencies [3165968](https://github.com/anypoint-web-components/anypoint-chip/commit/3165968168e291abf723c1232c427b9deb63d4e4) by Pawel
+* adding border css variable [08c7263](https://github.com/anypoint-web-components/anypoint-chip/commit/08c72633a91a902d75fa1becdb67b6bac2503ef6) by Pawel
+* adding dark theme demo [1ee3c91](https://github.com/anypoint-web-components/anypoint-chip/commit/1ee3c911542fa0512a613880848d0e43366ce871) by Pawel
+
+
+### Documentation
+
+* updating readme file [15f1a4c](https://github.com/anypoint-web-components/anypoint-chip/commit/15f1a4c7fe79c5a0d6b7839e6163611fbb6713f4) by Pawel
+
+
+### Refactor
+
+* replacing iron-icon with SVG direct use [f93a22d](https://github.com/anypoint-web-components/anypoint-chip/commit/f93a22d1d0aab95a60ef30e56f75b2e44320b4a9) by Pawel
+
+
+### Testing
+
+* updated Travis configuration to connect to Sauce Labs [7b3600a](https://github.com/anypoint-web-components/anypoint-chip/commit/7b3600a39b70cbca34143879b7fe42acc9e8e4b1) by Pawel
+
+
