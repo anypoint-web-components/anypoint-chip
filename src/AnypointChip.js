@@ -1,5 +1,12 @@
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html } from 'lit-element';
 import { clear } from '@advanced-rest-client/arc-icons/ArcIcons.js';
+import { classMap } from 'lit-html/directives/class-map.js';
+import elementStyles from './ChipStyles.js';
+
+/** @typedef {import('lit-element').SVGTemplateResult} SVGTemplateResult */
+/** @typedef {import('lit-element').TemplateResult} TemplateResult */
+
+export const hasIconNodeValue = Symbol('hasIconNodeValue');
 /**
  * `anypoint-chip`
  *
@@ -19,152 +26,15 @@ import { clear } from '@advanced-rest-client/arc-icons/ArcIcons.js';
  * </anypoint-chip>
  * ```
  *
- * The "Bliking" is the label rendered next to the icon. The chip also renders
+ * The "Biking" is the label rendered next to the icon. The chip also renders
  * built-in remove icon. Clicking on the icon dispatches `chip-removed`
  * custom event only. It does not remove the chip from the document as the
  * application logic might use different ways of removing elements from dom
  * than web platform APIs.
- *
- * ## Styling
- *
- * `<anypoint-chip>` provides the following custom properties for styling:
- *
- * Custom property | Description | Default
- * ----------------|-------------|----------
- * `--anypoint-chip-background-color` | Chip background color | `rgba(35, 47, 52, 0.12)`
- * `--anypoint-chip-border` | Chip border | `none`
- * `--anypoint-chip-focused-background-color` | Background color when focused | `#D6D6D6`
- * `--anypoint-chip-active-background-color` | Background color when toggle is active | `#cdcdcd`
- * `--anypoint-chip-icon-color` | Color of the icon | `#666666`
- * `--anypoint-chip-label-color` | Color of the label | `#232F34`
- * `--anypoint-chip-label-focused-color` | Color of the when focused | ``
- * `--anypoint-chip-label-active-color` | Color of the when active | ``
- * `--anypoint-chip-icon-close-color` | Color of the close icon | `#dfdfdf`
- * `--anypoint-chip-icon-close-background-color` | Background color of the close icon | `#666666`
- *
- * `<anypoint-chip>` provides the following [parts](https://www.w3.org/TR/css-shadow-parts-1/):
- *
- * Part name | Description
- * ----------------|-------------
- * `anypoint-chip-container` | Styles applied to the chip container
- * `anypoint-chip-icon` | Styles applied to the icon container
- * `anypoint-chip-label` | Styles applied to the label container
- * `anypoint-chip-remove` | Styles applied to the delete icon
- *
- * @customElement
- * @demo demo/index.html
- * @memberof UiElements
  */
 export class AnypointChip extends LitElement {
   static get styles() {
-    return css`:host {
-      display: inline-block;
-      outline: none;
-      cursor: default;
-      margin: 4px;
-      box-sizing: border-box;
-    }
-
-    .container {
-      border-radius: 16px;
-      background-color: var(--anypoint-chip-background-color, rgba(35, 47, 52, 0.12));
-      border: var(--anypoint-chip-border, none);
-      height: inherit;
-      min-height: 32px;
-      -moz-user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-
-      display: flex;
-      -ms-flex-direction: row;
-      flex-direction: row;
-      -ms-flex-align: center;
-      align-items: center;
-    }
-
-    :host([compatibility]) .container {
-      border-radius: 0;
-    }
-
-    :host([focused]:not([compatibility])) .container {
-      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
-                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
-      background-color: var(--anypoint-chip-focused-background-color, #D6D6D6);
-    }
-
-    :host([focused][compatibility]) .container {
-      background-color: var(--anypoint-chip-focused-background-color, #D6D6D6);
-    }
-
-    :host([active]) .container {
-      background-color: var(--anypoint-chip-active-background-color, #cdcdcd);
-    }
-
-    :host([toggles]) {
-      cursor: pointer;
-    }
-
-    :host([disabled]) {
-      opacity: 0.54;
-      pointer-events: none;
-    }
-
-    .icon ::slotted([slot=icon]) {
-      border-radius: 50%;
-      margin: 4px 0 4px 6px;
-      color: var(--anypoint-chip-icon-color, #666666);
-    }
-
-    .label {
-      display: inline-block;
-      padding: 0px 8px;
-      margin-left: 12px;
-      margin-right: 12px;
-      font-size: var(--arc-font-body2-font-size);
-      font-weight: var(--arc-font-body2-font-weight);
-      line-height: var(--arc-font-body2-line-height);
-      color: var(--anypoint-chip-label-color, #232F34);
-    }
-
-    .label ::slotted([slot]) {
-      font-size: var(--arc-font-body2-font-size);
-      font-weight: var(--arc-font-body2-font-weight);
-      line-height: var(--arc-font-body2-line-height);
-      color: var(--anypoint-chip-label-color, #232F34);
-    }
-
-    :host([focused]) ::slotted([slot]),
-    :host([focused]) .label {
-      color: var(--anypoint-chip-label-focused-color);
-    }
-
-    :host([active]) ::slotted([slot]),
-    :host([active]) .label {
-      color: var(--anypoint-chip-label-active-color);
-    }
-
-    .with-icon .label {
-      margin-left: 0;
-    }
-
-    .with-remove .label {
-      margin-right: 0;
-    }
-
-    .close {
-      width: 16px;
-      height: 16px;
-      background-color: var(--anypoint-chip-icon-close-background-color, #666666);
-      color: var(--anypoint-chip-icon-close-color, #dfdfdf);
-      border-radius: 50%;
-      margin-right: 6px;
-      cursor: pointer;
-      fill: currentColor;
-      display: inline-block;
-    }`;
+    return elementStyles;
   }
 
   static get properties() {
@@ -173,21 +43,23 @@ export class AnypointChip extends LitElement {
        * If set the chip can be removed.
        * The element does not remove itself from the DOM. It rather dispatch
        * `chip-removed` custom event to inform parent element about the action.
+       * @attribute
        */
       removable: { type: Boolean },
-
-      _hasIconNode: { type: Boolean },
       /**
        * If true, the user cannot interact with this element.
+       * @attribute
        */
       disabled: { type: Boolean, reflect: true },
       /**
        * If true, the button toggles the active state with each click or press
-       * of the spacebar or enter.
+       * of the space bar or enter.
+       * @attribute
        */
       toggles: { type: Boolean, reflect: true },
       /**
        * Enables Anypoint compatibility
+       * @attribute
        */
       compatibility: { type: Boolean, reflect: true }
     };
@@ -197,12 +69,14 @@ export class AnypointChip extends LitElement {
     this.__disabled = value;
     this._disabledChanged(value);
   }
+
   /**
    * @return {Boolean} True if the button is in disabled state.
    */
   get disabled() {
     return this.__disabled;
   }
+
   /**
    * @return {Boolean} True if the button is currently in active state. Only
    * available if the button `toggles`.
@@ -219,6 +93,7 @@ export class AnypointChip extends LitElement {
     this.__active = value;
     this.__activeChanged(value);
   }
+
   /**
    * @return {Boolean} True if the button is currently in focused state.
    */
@@ -238,6 +113,7 @@ export class AnypointChip extends LitElement {
       this.removeAttribute('focused');
     }
   }
+
   /**
    * @return {SVGTemplateResult} An icon to render when `removable` is set.
    * @default ARC's `clear` icon.
@@ -245,6 +121,7 @@ export class AnypointChip extends LitElement {
   get removeIcon() {
     return this._removeIcon || clear;
   }
+
   /**
    * @param {SVGTemplateResult} value An icon to be used to render "remove" icon.
    * It must be an instance of `SVGTemplateResult` that can be created from `lit-html`
@@ -263,8 +140,9 @@ export class AnypointChip extends LitElement {
     this._removeIcon = value;
     this.requestUpdate('removeIcon', old);
   }
+
   /**
-   * @return {HTMLElement} Reference to the icon slot element.
+   * @return {HTMLSlotElement} Reference to the icon slot element.
    */
   get _iconSlot() {
     return this.shadowRoot.querySelector('slot[name="icon"]');
@@ -275,6 +153,9 @@ export class AnypointChip extends LitElement {
     this._keyDownHandler = this._keyDownHandler.bind(this);
     this._focusBlurHandler = this._focusBlurHandler.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
+
+    this.toggles = false;
+    this.removable = false;
   }
 
   connectedCallback() {
@@ -308,6 +189,9 @@ export class AnypointChip extends LitElement {
     this.removeEventListener('click', this._clickHandler);
   }
 
+  /**
+   * @param {Map<string | number | symbol, unknown>} changedProperties 
+   */
   firstUpdated(changedProperties) {
     super.firstUpdated(changedProperties);
     this.__firstUpdated = true;
@@ -328,7 +212,7 @@ export class AnypointChip extends LitElement {
    * Handler for remove icon click event.
    * Cancels the event and calls `remove()`
    *
-   * @param {ClickEvent} e
+   * @param {PointerEvent} e
    */
   _removeHandler(e) {
     e.preventDefault();
@@ -341,6 +225,9 @@ export class AnypointChip extends LitElement {
    * that the user requested to remove the item.
    *
    * Note, this does not check if `removable` is set.
+   * 
+   * @fires chip-removed
+   * @fires chipremoved
    */
   remove() {
     this._active = false;
@@ -348,37 +235,25 @@ export class AnypointChip extends LitElement {
       composed: true,
       bubbles: true
     }));
+    this.dispatchEvent(new CustomEvent('chipremoved', {
+      composed: true,
+      bubbles: true
+    }));
   }
+  
   /**
    * According to material design spec, when there's no icon the
    * left hand side padding should be 12dp. Slotted styling API does now
-   * allow to detect when there's no contect so it has to be done using
+   * allow to detect when there's no content so it has to be done using
    * node observer.
    */
   _detectHasIcon() {
     const nodes = this._iconSlot.assignedNodes()
       .filter((node) => node.nodeType === Node.ELEMENT_NODE);
-    this._hasIconNode = !!nodes.length;
+    this[hasIconNodeValue] = !!nodes.length;
+    this.requestUpdate();
   }
-  /**
-   * Computes class name for the container.
-   * @param {Boolean} hasIconNode True if the element has an icon in the light DOM.
-   * @param {Boolean} removable True if the element can be removed.
-   * @return {String} Class name.
-   */
-  _computeContainerClass(hasIconNode, removable) {
-    let klass = '';
-    if (hasIconNode) {
-      klass += 'with-icon';
-    }
-    if (removable) {
-      if (klass) {
-        klass += ' ';
-      }
-      klass += 'with-remove';
-    }
-    return klass;
-  }
+
   /**
    * Handler for key down when element is focused.
    * Removes the item when delete key is pressed.
@@ -392,6 +267,7 @@ export class AnypointChip extends LitElement {
       this._asyncClick();
     }
   }
+
   /**
    * Sets state of the `focused` property depending on the event handled by this
    * listener.
@@ -400,10 +276,11 @@ export class AnypointChip extends LitElement {
   _focusBlurHandler(e) {
     this._focused = e.type === 'focus';
   }
+
   /**
-   * Calles when the value of `disabled` property change. Sets `aria-disabled`
+   * Called when the value of `disabled` property change. Sets `aria-disabled`
    * and `tabIndex` attributes.
-   * @param {Boolean} disabled Current value of `disabled` property.
+   * @param {boolean} disabled Current value of `disabled` property.
    */
   _disabledChanged(disabled) {
     this.setAttribute('aria-disabled', disabled ? 'true' : 'false');
@@ -415,7 +292,7 @@ export class AnypointChip extends LitElement {
       // leaving `-1` hides shadow root children from the tab order.
       this._oldTabIndex = this.getAttribute('tabindex');
       this._focused = false;
-      this.setAttribute('tabindex', -1);
+      this.setAttribute('tabindex', '-1');
       this.blur();
     } else if (this._oldTabIndex !== undefined) {
       if (this._oldTabIndex === null) {
@@ -425,6 +302,7 @@ export class AnypointChip extends LitElement {
       }
     }
   }
+
   /**
    * Handles click event (as well as Space and Enter key down) as sets the
    * `active` property.
@@ -436,6 +314,7 @@ export class AnypointChip extends LitElement {
       this._active = false;
     }
   }
+
   /**
    * Sets `_active` property depending on the input and current state of `_active`.
    * @param {Boolean} active The value to set.
@@ -445,8 +324,9 @@ export class AnypointChip extends LitElement {
       this._active = active;
     }
   }
+
   /**
-   * Calls `clic()` function on this element so event listeners can handle
+   * Calls `click()` function on this element so event listeners can handle
    * the action.
    */
   _asyncClick() {
@@ -454,27 +334,24 @@ export class AnypointChip extends LitElement {
       this.click();
     }, 1);
   }
+
   /**
    * Called when the `active` value change.
    * It sets `active` attribute and, if the button toggles, `aria-pressed` attribute.
-   * @param {Boolean} active Current state of `active`./
+   * @param {boolean} active Current state of `active`./
    */
   __activeChanged(active) {
     if (active) {
       if (!this.hasAttribute('active')) {
         this.setAttribute('active', '');
       }
-    } else {
-      if (this.hasAttribute('active')) {
-        this.removeAttribute('active');
-      }
+    } else if (this.hasAttribute('active')) {
+      this.removeAttribute('active');
     }
     if (this.toggles) {
       this.setAttribute('aria-pressed', active ? 'true' : 'false');
-    } else {
-      if (this.hasAttribute('aria-pressed')) {
-        this.removeAttribute('aria-pressed');
-      }
+    } else if (this.hasAttribute('aria-pressed')) {
+      this.removeAttribute('aria-pressed');
     }
   }
 
@@ -495,8 +372,12 @@ export class AnypointChip extends LitElement {
   }
 
   render() {
-    const containerClass = this._computeContainerClass(this._hasIconNode, this.removable);
-    return html`<div part="anypoint-chip-container" class="container ${containerClass}">
+    const result = {
+      'container': true,
+      'with-icon': this[hasIconNodeValue],
+      'with-remove': this.removable,
+    };
+    return html`<div part="anypoint-chip-container" class="${classMap(result)}">
       ${this._iconSlotTemplate()}
       <span part="anypoint-chip-label" class="label"><slot></slot></span>
       ${this._removeTemplate()}

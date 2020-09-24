@@ -23,6 +23,10 @@ class DemoPage extends ArcDemoPage {
     this._componentName = 'anypoint-chip';
 
     this.demoStates = ['Material', 'Anypoint'];
+    this.darkThemeActive = false;
+    this.demoLeadingIcon = false;
+    this.demoDisabled = false;
+    this.demoRemovable = false;
 
     this._demoStateHandler = this._demoStateHandler.bind(this);
     this._toggleMainOption = this._toggleMainOption.bind(this);
@@ -32,12 +36,12 @@ class DemoPage extends ArcDemoPage {
     this._handleAction = this._handleAction.bind(this);
 
     this.amenities = [
-      { label: 'Elevator' },
-      { label: 'Washer / Dryer' },
-      { label: 'Fireplace' },
-      { label: 'Wheelchair access' },
-      { label: 'Dogs ok' },
-      { label: 'Cats ok' }
+      { label: 'Elevator', selected: false, },
+      { label: 'Washer / Dryer', selected: false, },
+      { label: 'Fireplace', selected: false, },
+      { label: 'Wheelchair access', selected: false, },
+      { label: 'Dogs ok', selected: false, },
+      { label: 'Cats ok', selected: false, }
     ];
   }
 
@@ -58,22 +62,15 @@ class DemoPage extends ArcDemoPage {
 
   _demoStateHandler(e) {
     const state = e.detail.value;
-    switch (state) {
-      case 0:
-        this.demoCompatibility = false;
-        break;
-      case 1:
-        this.demoCompatibility = true;
-        break;
-    }
+    this.demoCompatibility = state === 1;
   }
 
   _toggleAmenitiesFilter(e) {
     const index = Number(e.target.dataset.index);
-    if (isNaN(index)) {
+    if (Number.isNaN(index)) {
       return;
     }
-    const item = Object.assign({}, this.amenities[index]);
+    const item = { ...this.amenities[index] };
     item.selected = !item.selected;
     this.amenities[index] = item;
     this.render();
@@ -81,7 +78,7 @@ class DemoPage extends ArcDemoPage {
 
   _toggleTypesChoice(e) {
     const selectedClass = 'selected';
-    const selected = document.querySelector('.types .' + selectedClass);
+    const selected = document.querySelector(`.types .${selectedClass}`);
     if (selected) {
       selected.classList.remove(selectedClass);
     }
@@ -89,16 +86,18 @@ class DemoPage extends ArcDemoPage {
   }
 
   _handleAction(e) {
-    const action = e.currentTarget.dataset.action;
+    const { action } = e.currentTarget.dataset;
     if (!action) {
       return;
     }
-    const toast = document.getElementById(action + 'Action');
+    const toast = document.getElementById(`${action}Action`);
+    // @ts-ignore
     toast.opened = true;
   }
 
   get partsTestMessage() {
     const p = document.createElement('span');
+    // @ts-ignore
     const hasParts = p.part !== undefined;
     return hasParts ? html`<p>Your browser support CSS Shadow Parts</p>` :
       html`<p>Your browser do not support CSS Shadow Parts</p>`;

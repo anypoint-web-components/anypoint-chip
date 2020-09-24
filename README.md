@@ -8,7 +8,7 @@
 
 A compact material design element that represent and input, attribute, or action.
 
-### Example
+## Example
 
 ```html
 <style>
@@ -53,14 +53,11 @@ A compact material design element that represent and input, attribute, or action
 </section>
 ```
 
-### API components
-
-This components is a part of [API components ecosystem](https://elements.advancedrestclient.com/)
-
 ## Usage
 
 ### Installation
-```
+
+```sh
 npm install --save @anypoint-web-components/anypoint-chip
 ```
 
@@ -99,7 +96,7 @@ customElements.define('sample-element', SampleElement);
 
 ```sh
 git clone https://github.com/anypoint-web-components/anypoint-chip
-cd anypoint-chippolymer test --npm
+cd anypoint-chip
 npm install
 ```
 

@@ -1,51 +1,72 @@
 import { fixture, assert, nextFrame, aTimeout } from '@open-wc/testing';
-import '../anypoint-chip.js';
-import * as sinon from 'sinon/pkg/sinon-esm.js';
+import sinon from 'sinon';
 import * as MockInteractions from '@polymer/iron-test-helpers/mock-interactions.js';
 import { clearAll, clear } from '@advanced-rest-client/arc-icons/ArcIcons.js';
+import '../anypoint-chip.js';
+import { hasIconNodeValue } from '../src/AnypointChip.js';
 
-describe('<anypoint-chip>', function() {
+/** @typedef {import('../index').AnypointChip} AnypointChip */
+
+describe('<anypoint-chip>', () => {
+  /**
+   * @returns {Promise<AnypointChip>}
+   */
   async function basicFixture() {
-    return /** @type {AnypointChip} */ (await fixture('<anypoint-chip>test label</anypoint-chip>'));
+    return fixture('<anypoint-chip>test label</anypoint-chip>');
   }
-
+  /**
+   * @returns {Promise<AnypointChip>}
+   */
   async function removableFixture() {
-    return /** @type {AnypointChip} */ (await fixture('<anypoint-chip removable>test label</anypoint-chip>'));
+    return fixture('<anypoint-chip removable>test label</anypoint-chip>');
   }
-
+  /**
+   * @returns {Promise<AnypointChip>}
+   */
   async function withLabelFixture() {
-    return /** @type {AnypointChip} */ (await fixture('<anypoint-chip>My label</anypoint-chip>'));
+    return fixture('<anypoint-chip>My label</anypoint-chip>');
   }
-
+  /**
+   * @returns {Promise<AnypointChip>}
+   */
   async function withIconFixture() {
-    return /** @type {AnypointChip} */ (await fixture(`<anypoint-chip>
+    return fixture(`
+    <anypoint-chip>
       <span class="avatar" slot="icon">C</span>
       <span>My label</span>
-    </anypoint-chip>`));
+    </anypoint-chip>`);
   }
-
+  /**
+   * @returns {Promise<AnypointChip>}
+   */
   async function roleFixture() {
-    return /** @type {AnypointChip} */ (await fixture(`<anypoint-chip role="radio"></anypoint-chip>`));
+    return fixture(`<anypoint-chip role="radio"></anypoint-chip>`);
   }
-
+  /**
+   * @returns {Promise<AnypointChip>}
+   */
   async function togglesFixture() {
-    return /** @type {AnypointChip} */ (await fixture(`<anypoint-chip removable toggles>test label</anypoint-chip>`));
+    return fixture(`<anypoint-chip removable toggles>test label</anypoint-chip>`);
   }
-
+  /**
+   * @returns {Promise<AnypointChip>}
+   */
   async function disabledFixture() {
-    return /** @type {AnypointChip} */ (await fixture(`<anypoint-chip disabled>test label</anypoint-chip>`));
+    return fixture(`<anypoint-chip disabled>test label</anypoint-chip>`);
   }
-
+  /**
+   * @returns {Promise<AnypointChip>}
+   */
   async function tabIndexFixture() {
-    return /** @type {AnypointChip} */ (await fixture(`<anypoint-chip tabindex="1">test label</anypoint-chip>`));
+    return fixture(`<anypoint-chip tabindex="1">test label</anypoint-chip>`);
   }
 
   describe('Basics', () => {
     let element;
 
-    it('_hasIconNode is not computed', async () => {
+    it('[hasIconNodeValue] is not computed', async () => {
       element = await basicFixture();
-      assert.isUndefined(element._hasIconNode);
+      assert.isUndefined(element[hasIconNodeValue]);
     });
 
     it('Close icon is not rendered', async () => {
@@ -79,17 +100,17 @@ describe('<anypoint-chip>', function() {
       assert.isTrue(node.classList.contains('with-icon'));
     });
 
-    it('_hasIconNode is computed when icon is set', async () => {
+    it('[hasIconNodeValue] is computed when icon is set', async () => {
       element = await withIconFixture();
-      assert.isTrue(element._hasIconNode);
+      assert.isTrue(element[hasIconNodeValue]);
     });
 
-    it('_hasIconNode is computed when icon is removed', async () => {
+    it('[hasIconNodeValue] is computed when icon is removed', async () => {
       element = await withIconFixture();
       const node = element.querySelector('.avatar');
       node.parentNode.removeChild(node);
       await nextFrame();
-      assert.isFalse(element._hasIconNode);
+      assert.isFalse(element[hasIconNodeValue]);
     });
 
     it('Sets disabled property to undefined when not previously set', async () => {
@@ -133,13 +154,13 @@ describe('<anypoint-chip>', function() {
     it('Computes value when no icon', async () => {
       element = await basicFixture();
       element._detectHasIcon();
-      assert.isFalse(element._hasIconNode);
+      assert.isFalse(element[hasIconNodeValue]);
     });
 
     it('Computes value when icon', async () => {
       element = await withIconFixture();
       element._detectHasIcon();
-      assert.isTrue(element._hasIconNode);
+      assert.isTrue(element[hasIconNodeValue]);
     });
   });
 
@@ -156,9 +177,11 @@ describe('<anypoint-chip>', function() {
     ].forEach((item) => {
       it(`Calls ${item[1]}() when backspace key`, async () => {
         element = await removableFixture();
+        // @ts-ignore
         const spy = sinon.spy(element, item[1]);
+        // @ts-ignore
         element._keyDownHandler({
-          key: item[0]
+          key: item[0],
         });
         assert.isTrue(spy.called);
       });
@@ -168,38 +191,12 @@ describe('<anypoint-chip>', function() {
       element = await removableFixture();
       const spy1 = sinon.spy(element, 'remove');
       const spy2 = sinon.spy(element, '_clickHandler');
+      // @ts-ignore
       element._keyDownHandler({
         key: 'E'
       });
       assert.isFalse(spy1.called);
       assert.isFalse(spy2.called);
-    });
-  });
-
-  describe('_computeContainerClass()', () => {
-    let element;
-    before(async () => {
-      element = await basicFixture();
-    });
-
-    it('Returns empty string when no attributes', () => {
-      const result = element._computeContainerClass();
-      assert.equal(result, '');
-    });
-
-    it('Adds "with-icon"', () => {
-      const result = element._computeContainerClass(true);
-      assert.equal(result, 'with-icon');
-    });
-
-    it('Adds "with-remove"', () => {
-      const result = element._computeContainerClass(false, true);
-      assert.equal(result, 'with-remove');
-    });
-
-    it('Adds both', () => {
-      const result = element._computeContainerClass(true, true);
-      assert.equal(result, 'with-icon with-remove');
     });
   });
 
