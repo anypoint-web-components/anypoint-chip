@@ -1,10 +1,8 @@
-[![Published on NPM](https://img.shields.io/npm/v/@anypoint-web-components/anypoint-chip.svg)](https://www.npmjs.com/package/@anypoint-web-components/anypoint-chip)
+# Deprecated
 
-[![Build Status](https://travis-ci.org/anypoint-web-components/anypoint-chip.svg?branch=stage)](https://travis-ci.org/anypoint-web-components/anypoint-chip)
+This component has been moved to `anypoint-web-components/awc`.
 
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/anypoint-web-components/anypoint-chip)
-
-# anypoint-chip
+-----
 
 A compact material design element that represent and input, attribute, or action.
 

@@ -25,6 +25,8 @@ export declare const hasIconNodeValue: unique symbol;
  * custom event only. It does not remove the chip from the document as the
  * application logic might use different ways of removing elements from dom
  * than web platform APIs.
+ * 
+ * @deprecated Migrate to anypoint-web-components/awc
  */
 export declare class AnypointChip extends LitElement {
   styles: CSSResult;
